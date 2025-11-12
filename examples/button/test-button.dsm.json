@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "storyFile": "/Users/patrickeaton/Projects/design-system-mcp/examples/button/test-button.stories.tsx",
+    "generatedAt": "2025-11-12T20:19:37.683Z",
+    "framework": "react",
+    "designLibrary": "mui",
+    "generatedBy": "ai-agent"
+  },
+  "components": [
+    {
+      "id": "testbutton",
+      "name": "TestButton",
+      "description": "A versatile button component with multiple variants and sizes.",
+      "category": "general",
+      "tags": [
+        "autodocs",
+        "component",
+        "interactive"
+      ],
+      "importStatement": "import { TestButton } from '@examples/TestButton';",
+      "basicUsage": "<TestButton />",
+      "propsSchema": [],
+      "slots": [],
+      "codeExamples": {
+        "basic": "<TestButton />"
+      },
+      "relatedComponents": [],
+      "dependencies": [],
+      "aiAnalysis": "### Comprehensive Analysis of the Button Component\n\n#### Component Overview\n- **Name**: Button\n- **Description**: Primary UI component for user interaction.\n- **Category**: Actions\n- **Import Path**: `@examples/TestButton/button`\n- **Tags**: \n  - `react`\n  - `interactive`\n  - `customizable`\n  - `sizing`\n\n#### Props\nThe Button component accepts the following props:\n\n| Prop Name       | Type                          | Required | Default Value |\n|------------------|-------------------------------|----------|---------------|\n| `primary`        | boolean                       | No       | N/A           |\n| `backgroundColor`| string                        | No       | N/A           |\n| `size`          | `'small' | 'medium' | 'large'` | No       | N/A           |\n| `label`         | string                        | Yes      | N/A           |\n| `onClick`       | `()`                          | No       | `void`        |\n\n**Usage Guidance**:\n- The `label` prop is mandatory and should be used to define the button's text.\n- The `size` prop allows for flexible sizing options, enhancing responsiveness across different devices.\n- The `primary` prop can be used to style the button as a primary action, making it stand out.\n- The `backgroundColor` prop allows for customization of the button's background, enabling brand consistency.\n\n#### Accessibility Features\nCurrently, the Button component lacks defined accessibility features such as:\n- **ARIA Labels**: Consider adding ARIA labels to improve screen reader support.\n- **Keyboard Support**: Ensure that the button can be activated via keyboard inputs (e.g., Enter, Space).\n- **Semantic Roles**: Use appropriate semantic roles to enhance accessibility.\n\n#### Dependencies\n- The Button component relies on React as its primary dependency.\n\n#### Related Components\n- **MyAwesomeButton**: This could be a variant or an alternative button component that shares similar functionality. Consider documenting the differences and use cases for each.\n\n### Recommendations for Design System Integration\n\n1. **Enhanced Documentation**:\n   - Provide detailed examples of usage in the documentation, including various combinations of props.\n   - Include code snippets demonstrating how to implement the button in different scenarios (e.g., with and without the `primary` prop).\n\n2. **Accessibility Improvements**:\n   - Implement ARIA attributes and keyboard navigation support to ensure compliance with accessibility standards.\n   - Document the accessibility features and best practices for using the button component.\n\n3. **Discoverability Enhancements**:\n   - Tag the component with relevant keywords in the design system documentation to improve searchability.\n   - Create a dedicated section for buttons in the design system, showcasing all variants and usage patterns.\n\n4. **Component Variants**:\n   - Consider creating additional variants of the button (e.g., outlined, text) and document their specific use cases.\n   - Provide visual examples for each variant to guide developers in selecting the appropriate button style.\n\n5. **Testing and Feedback**:\n   - Encourage user feedback on the button's usability and accessibility features.\n   - Implement visual regression testing to ensure consistent styling across updates.\n\n### Conclusion\nThe Button component is a versatile and essential part of the design system, facilitating user interaction. By enhancing its documentation, accessibility features, and discoverability, developers can leverage this component more effectively, leading to a better user experience across applications."
+    }
+  ]
+}

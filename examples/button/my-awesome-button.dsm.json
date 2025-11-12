@@ -1,0 +1,30 @@
+{
+  "metadata": {
+    "storyFile": "/Users/patrickeaton/Projects/design-system-mcp/examples/button/my-awesome-button.stories.tsx",
+    "generatedAt": "2025-11-12T20:18:59.861Z",
+    "framework": "react",
+    "designLibrary": "mui"
+  },
+  "components": [
+    {
+      "id": "myawesomebutton",
+      "name": "MyAwesomeButton",
+      "description": "A super awesome button component with kebab-case filename that demonstrates component name extraction.",
+      "category": "general",
+      "tags": [
+        "autodocs",
+        "awesome",
+        "button"
+      ],
+      "importStatement": "import { MyAwesomeButton } from '@examples/my-awesome-button';",
+      "basicUsage": "<MyAwesomeButton />",
+      "propsSchema": [],
+      "slots": [],
+      "codeExamples": {
+        "basic": "<MyAwesomeButton />"
+      },
+      "relatedComponents": [],
+      "dependencies": []
+    }
+  ]
+}

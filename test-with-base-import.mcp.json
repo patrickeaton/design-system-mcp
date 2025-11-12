@@ -1,0 +1,83 @@
+{
+  "metadata": {
+    "name": "Test Design System",
+    "version": "1.0.0",
+    "description": "A test system",
+    "framework": "react",
+    "generatedAt": "2025-11-12T18:09:43.694Z",
+    "sourceDirectory": "."
+  },
+  "designSystem": {},
+  "components": [
+    {
+      "id": "testbutton",
+      "name": "TestButton",
+      "description": "A versatile button component with multiple variants and sizes.",
+      "category": "general",
+      "tags": [
+        "autodocs",
+        "component",
+        "interactive"
+      ],
+      "importStatement": "import { TestButton } from '@examples/TestButton';",
+      "basicUsage": "<TestButton />",
+      "propsSchema": [],
+      "slots": [],
+      "codeExamples": {
+        "basic": "<TestButton />"
+      },
+      "relatedComponents": [],
+      "dependencies": []
+    },
+    {
+      "id": "myawesomebutton",
+      "name": "MyAwesomeButton",
+      "description": "A super awesome button component with kebab-case filename that demonstrates component name extraction.",
+      "category": "general",
+      "tags": [
+        "autodocs",
+        "awesome",
+        "button"
+      ],
+      "importStatement": "import { MyAwesomeButton } from '@examples/my-awesome-button';",
+      "basicUsage": "<MyAwesomeButton />",
+      "propsSchema": [],
+      "slots": [],
+      "codeExamples": {
+        "basic": "<MyAwesomeButton />"
+      },
+      "relatedComponents": [],
+      "dependencies": []
+    }
+  ],
+  "componentIndex": {
+    "byTag": {
+      "autodocs": [
+        "TestButton",
+        "MyAwesomeButton"
+      ],
+      "component": [
+        "TestButton"
+      ],
+      "interactive": [
+        "TestButton"
+      ],
+      "awesome": [
+        "MyAwesomeButton"
+      ],
+      "button": [
+        "MyAwesomeButton"
+      ]
+    },
+    "byCategory": {
+      "general": [
+        "TestButton",
+        "MyAwesomeButton"
+      ]
+    },
+    "alphabetical": [
+      "MyAwesomeButton",
+      "TestButton"
+    ]
+  }
+}

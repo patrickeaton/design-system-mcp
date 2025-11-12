@@ -1,0 +1,34 @@
+import React from 'react';
+
+interface ButtonProps {
+  primary?: boolean;
+  backgroundColor?: string;
+  size?: 'small' | 'medium' | 'large';
+  label: string;
+  onClick?: () => void;
+}
+
+/**
+ * Primary UI component for user interaction
+ */
+export const Button = ({
+  primary = false,
+  size = 'medium',
+  backgroundColor,
+  label,
+  ...props
+}: ButtonProps) => {
+  const mode = primary ? 'primary' : 'secondary';
+  return (
+    <button
+      type="button"
+      className={['button', `button--${size}`, `button--${mode}`].join(' ')}
+      style={{ backgroundColor }}
+      {...props}
+    >
+      {label}
+    </button>
+  );
+};
+
+export default Button;

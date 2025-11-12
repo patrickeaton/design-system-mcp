@@ -1,0 +1,1 @@
+export { ComponentAnalyzerTool } from './component-analyzer-tool';

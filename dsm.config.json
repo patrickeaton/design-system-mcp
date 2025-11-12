@@ -1,0 +1,11 @@
+{
+  "name": "Test Design System",
+  "description": "A test system",
+  "output": "./design-system.mcp.json",
+  "rootDirectory": ".",
+  "outputMode": "inline-files",
+  "storiesPattern": "**/*.stories.@(js|jsx|ts|tsx|mdx)",
+  "framework": "react",
+  "designLibrary": "mui",
+  "baseImportPath": "@examples"
+}

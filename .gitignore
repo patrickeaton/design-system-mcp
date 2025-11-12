@@ -11,3 +11,8 @@
 
 #!.yarn/cache
 .pnp.*
+.env.design-system-mcp
+node_modules/
+dist/
+build/
+.dsmrc
