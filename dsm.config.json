@@ -1,11 +1,53 @@
 {
-  "name": "Test Design System",
-  "description": "A test system",
-  "output": "./design-system.mcp.json",
-  "rootDirectory": ".",
+  "name": "Test System",
+  "description": "Test",
+  "parsers": [
+    "storybook",
+    "openai",
+    "comments"
+  ],
   "outputMode": "inline-files",
   "storiesPattern": "**/*.stories.@(js|jsx|ts|tsx|mdx)",
+  "output": ".",
+  "rootDirectory": "",
   "framework": "react",
   "designLibrary": "mui",
-  "baseImportPath": "@examples"
+  "baseImportPath": "@examples",
+  "parserConfig": {
+    "enabled": true,
+    "mergeStrategy": "merge",
+    "continueOnError": true,
+    "parsers": [
+      {
+        "name": "storybook",
+        "enabled": true,
+        "weight": 1,
+        "config": {
+          "extractVariants": false,
+          "extractExamples": true,
+          "parseComponentFile": true
+        }
+      },
+      {
+        "name": "openai",
+        "enabled": true,
+        "weight": 2,
+        "config": {
+          "model": "gpt-4o",
+          "temperature": 0.5,
+          "maxTokens": 2000,
+          "enhanceExisting": true
+        }
+      }
+    ]
+  },
+  "storybookExtractVariants": true,
+  "openaiModel": "gpt-3.5-turbo",
+  "storybookExtractExamples": true,
+  "storybookParseComponentFile": true,
+  "openaiTemperature": 0.3,
+  "openaiMaxTokens": 2000,
+  "openaiEnhanceExisting": true,
+  "commentsIncludeJSDoc": true,
+  "commentsStrictParsing": false
 }

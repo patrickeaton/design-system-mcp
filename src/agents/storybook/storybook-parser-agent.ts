@@ -1,6 +1,6 @@
-import { Agent } from "../agent";
-import { ComponentAnalyzerTool } from "../tools/component-analyzer-tool";
-import { MemoryStorage } from "../memory-storage";
+import { Agent } from '../agent';
+import { ComponentAnalyzerTool } from '../tools/component-analyzer-tool';
+import { MemoryStorage } from '../memory-storage';
 
 /**
  * Specialized agent for parsing Storybook files and generating component context
@@ -12,15 +12,15 @@ export class StorybookParserAgent {
   constructor() {
     // Create memory storage for this agent
     this.storage = new MemoryStorage({
-      accountId: "design-system-mcp",
-      projectId: "storybook-parser",
-      writeAgent: "storybook-parser-agent",
+      accountId: 'design-system-mcp',
+      projectId: 'storybook-parser',
+      writeAgent: 'storybook-parser-agent',
     });
 
     // Create the agent with specialized prompt
     this.agent = new Agent({
-      accountId: "design-system-mcp",
-      projectId: "storybook-parser",
+      accountId: 'design-system-mcp',
+      projectId: 'storybook-parser',
       prompt: `You are a specialized agent for analyzing components and generating comprehensive design system context.
 
 Your role is to:
@@ -36,7 +36,7 @@ Focus on providing value beyond basic parsing - offer design system integration 
       tools: [ComponentAnalyzerTool],
       storage: this.storage as any, // Type assertion for now
       config: {
-        model: "gpt-4o-mini",
+        model: 'gpt-4o-mini',
         max_tokens: 2000,
         temperature: 0.3, // Lower temperature for more consistent parsing
       },
@@ -49,11 +49,11 @@ Focus on providing value beyond basic parsing - offer design system integration 
   public async parseStorybookFile(
     storyFilePath: string,
     componentFilePath: string,
-    framework: string = "react",
-    designLibrary: string = "none",
-    parsedComponents?: any[]
+    framework: string = 'react',
+    designLibrary: string = 'none',
+    parsedComponents?: any[],
   ): Promise<string> {
-    let contextInfo = "";
+    let contextInfo = '';
     if (parsedComponents && parsedComponents.length > 0) {
       contextInfo = `
 
@@ -66,7 +66,7 @@ Use this as baseline context, but focus on using the analyze_component tool to g
     const message = `Please analyze the component files and generate comprehensive design system context.
 
 Story File: ${storyFilePath}
-Component File: ${componentFilePath || "Not specified - try to infer from story file"}
+Component File: ${componentFilePath || 'Not specified - try to infer from story file'}
 Framework: ${framework}
 Design Library: ${designLibrary}${contextInfo}
 
@@ -78,13 +78,13 @@ INSTRUCTIONS:
 
 Generate a comprehensive analysis that will help developers understand and use this component effectively.`;
 
-    const response = await this.agent.sendMessage("user", message, {
+    const response = await this.agent.sendMessage('user', message, {
       includeMessageHistory: false,
     });
 
-    return typeof response === "string"
+    return typeof response === 'string'
       ? response
-      : response?.content || "Failed to parse component";
+      : response?.content || 'Failed to parse component';
   }
 
   /**
@@ -92,7 +92,7 @@ Generate a comprehensive analysis that will help developers understand and use t
    */
   public async getParsingInsights(
     storyFilePath: string,
-    componentFilePath: string
+    componentFilePath: string,
   ): Promise<string> {
     const message = `Analyze the Storybook file at "${storyFilePath}" and component file at "${componentFilePath}" and provide insights about:
 
@@ -104,13 +104,13 @@ Generate a comprehensive analysis that will help developers understand and use t
 
 Please provide actionable recommendations for improving the component's discoverability and usability.`;
 
-    const response = await this.agent.sendMessage("user", message, {
+    const response = await this.agent.sendMessage('user', message, {
       includeMessageHistory: true, // Include history for context
     });
 
-    return typeof response === "string"
+    return typeof response === 'string'
       ? response
-      : response?.content || "Failed to analyze component";
+      : response?.content || 'Failed to analyze component';
   }
 
   /**
@@ -122,7 +122,7 @@ Please provide actionable recommendations for improving the component's discover
       componentPath: string;
       framework?: string;
       designLibrary?: string;
-    }>
+    }>,
   ): Promise<Array<{ file: string; result: string; success: boolean }>> {
     const results = [];
 
@@ -131,8 +131,8 @@ Please provide actionable recommendations for improving the component's discover
         const result = await this.parseStorybookFile(
           file.storyPath,
           file.componentPath,
-          file.framework || "react",
-          file.designLibrary || "none"
+          file.framework || 'react',
+          file.designLibrary || 'none',
         );
 
         results.push({
@@ -143,7 +143,7 @@ Please provide actionable recommendations for improving the component's discover
       } catch (error) {
         results.push({
           file: file.storyPath,
-          result: error instanceof Error ? error.message : "Unknown error",
+          result: error instanceof Error ? error.message : 'Unknown error',
           success: false,
         });
       }

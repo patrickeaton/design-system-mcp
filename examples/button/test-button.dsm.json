@@ -1,21 +1,30 @@
 {
   "metadata": {
     "storyFile": "/Users/patrickeaton/Projects/design-system-mcp/examples/button/test-button.stories.tsx",
-    "generatedAt": "2025-11-12T20:19:37.683Z",
+    "generatedAt": "2025-11-12T22:40:11.939Z",
     "framework": "react",
     "designLibrary": "mui",
-    "generatedBy": "ai-agent"
+    "generatedBy": "parser-chain",
+    "parsers": [
+      "comments",
+      "storybook",
+      "openai"
+    ],
+    "mergeStrategy": "merge"
   },
   "components": [
     {
       "id": "testbutton",
       "name": "TestButton",
-      "description": "A versatile button component with multiple variants and sizes.",
+      "description": "**: A versatile button component designed for various use cases, capable of supporting multiple variants and sizes.",
       "category": "general",
       "tags": [
         "autodocs",
         "component",
-        "interactive"
+        "interactive",
+        "and",
+        "customization",
+        "customizable"
       ],
       "importStatement": "import { TestButton } from '@examples/TestButton';",
       "basicUsage": "<TestButton />",
@@ -26,7 +35,109 @@
       },
       "relatedComponents": [],
       "dependencies": [],
-      "aiAnalysis": "### Comprehensive Analysis of the Button Component\n\n#### Component Overview\n- **Name**: Button\n- **Description**: Primary UI component for user interaction.\n- **Category**: Actions\n- **Import Path**: `@examples/TestButton/button`\n- **Tags**: \n  - `react`\n  - `interactive`\n  - `customizable`\n  - `sizing`\n\n#### Props\nThe Button component accepts the following props:\n\n| Prop Name       | Type                          | Required | Default Value |\n|------------------|-------------------------------|----------|---------------|\n| `primary`        | boolean                       | No       | N/A           |\n| `backgroundColor`| string                        | No       | N/A           |\n| `size`          | `'small' | 'medium' | 'large'` | No       | N/A           |\n| `label`         | string                        | Yes      | N/A           |\n| `onClick`       | `()`                          | No       | `void`        |\n\n**Usage Guidance**:\n- The `label` prop is mandatory and should be used to define the button's text.\n- The `size` prop allows for flexible sizing options, enhancing responsiveness across different devices.\n- The `primary` prop can be used to style the button as a primary action, making it stand out.\n- The `backgroundColor` prop allows for customization of the button's background, enabling brand consistency.\n\n#### Accessibility Features\nCurrently, the Button component lacks defined accessibility features such as:\n- **ARIA Labels**: Consider adding ARIA labels to improve screen reader support.\n- **Keyboard Support**: Ensure that the button can be activated via keyboard inputs (e.g., Enter, Space).\n- **Semantic Roles**: Use appropriate semantic roles to enhance accessibility.\n\n#### Dependencies\n- The Button component relies on React as its primary dependency.\n\n#### Related Components\n- **MyAwesomeButton**: This could be a variant or an alternative button component that shares similar functionality. Consider documenting the differences and use cases for each.\n\n### Recommendations for Design System Integration\n\n1. **Enhanced Documentation**:\n   - Provide detailed examples of usage in the documentation, including various combinations of props.\n   - Include code snippets demonstrating how to implement the button in different scenarios (e.g., with and without the `primary` prop).\n\n2. **Accessibility Improvements**:\n   - Implement ARIA attributes and keyboard navigation support to ensure compliance with accessibility standards.\n   - Document the accessibility features and best practices for using the button component.\n\n3. **Discoverability Enhancements**:\n   - Tag the component with relevant keywords in the design system documentation to improve searchability.\n   - Create a dedicated section for buttons in the design system, showcasing all variants and usage patterns.\n\n4. **Component Variants**:\n   - Consider creating additional variants of the button (e.g., outlined, text) and document their specific use cases.\n   - Provide visual examples for each variant to guide developers in selecting the appropriate button style.\n\n5. **Testing and Feedback**:\n   - Encourage user feedback on the button's usability and accessibility features.\n   - Implement visual regression testing to ensure consistent styling across updates.\n\n### Conclusion\nThe Button component is a versatile and essential part of the design system, facilitating user interaction. By enhancing its documentation, accessibility features, and discoverability, developers can leverage this component more effectively, leading to a better user experience across applications."
+      "accessibility": "aria-label: ariants, aria-label: ARIA Labels, aria-label: ARIA labels, aria-label: ariant, keyboard-support: keyboard-navigation",
+      "parserData": {
+        "storybook": {
+          "storyFile": "/Users/patrickeaton/Projects/design-system-mcp/examples/button/test-button.stories.tsx",
+          "framework": "react",
+          "variants": []
+        },
+        "parsers": [
+          "storybook",
+          "openai"
+        ],
+        "openai": {
+          "analysis": "### Comprehensive Analysis of the `TestButton` Component\n\n#### Component Overview\n- **Name**: TestButton\n- **Description**: A versatile button component designed for various use cases, capable of supporting multiple variants and sizes.\n- **Category**: Actions\n- **Import Path**: `import { TestButton } from '@examples/TestButton';`\n\n#### Props and Slots\n- **Props**: Currently, there are no defined props for the `TestButton`. This suggests that the component may be using default properties or lacks customization options.\n- **Slots**: No slots are defined, indicating that the component does not support named slots for content insertion.\n\n#### Tags and Customization\n- **Tags**: \n  - `customizable`: This tag suggests that while the component may not have explicit props, it is likely designed to be styled or modified through external means (e.g., CSS, themes).\n  \n#### Dependencies and Related Components\n- **Dependencies**: The component does not have any external dependencies, making it lightweight and easy to integrate.\n- **Related Components**: There are no related components listed, which may indicate that this button is a standalone component.\n\n#### Accessibility Features\n- **Accessibility**: \n  - **ARIA Labels**: No ARIA labels are defined, which may impact screen reader users.\n  - **Keyboard Support**: No keyboard support features are outlined, which is critical for accessibility.\n  - **Semantic Roles**: No semantic roles are specified, which could help improve the component's accessibility.\n\n### Recommendations for Improvement\n\n1. **Define Props**: \n   - Introduce props for customization, such as `variant`, `size`, `color`, and `onClick` handlers. This will enhance the component's flexibility and usability.\n\n2. **Accessibility Enhancements**:\n   - Implement ARIA labels to improve screen reader compatibility.\n   - Ensure keyboard support is included, allowing users to navigate and activate the button using keyboard shortcuts.\n   - Define semantic roles (e.g., `button`) to clarify the component's purpose to assistive technologies.\n\n3. **Documentation and Discoverability**:\n   - Expand the documentation to include usage examples, prop descriptions, and accessibility considerations. This will help developers understand how to implement the component effectively.\n   - Consider adding a dedicated section in the design system for button components, showcasing various states (hover, active, disabled) and variants.\n\n4. **Storybook Enhancements**:\n   - Add more stories to demonstrate different use cases, such as various sizes, colors, and states. This will provide developers with a visual reference for implementing the button in their applications.\n\n5. **Integration with Design Tokens**:\n   - If using a design system like MUI, ensure that the `TestButton` integrates with design tokens for consistent styling across applications. This includes colors, typography, and spacing.\n\n### Conclusion\nThe `TestButton` component serves as a foundational element within the design system but requires enhancements in customization, accessibility, and documentation to maximize its utility and effectiveness for developers. By addressing these areas, the component can become a more robust and integral part of the design system, improving the overall developer experience.",
+          "enhancedBy": "gpt-4o-mini",
+          "suggestions": [
+            "Consider adding a dedicated section in the design system for button components, showcasing various states (hover, active, disabled) and variants",
+            "could help improve the component's accessibility"
+          ],
+          "bestPractices": [
+            "use cases, capable of supporting multiple variants and sizes",
+            "Implement ARIA labels to improve screen reader compatibility",
+            "Ensure keyboard support is included, allowing users to navigate and activate the button using keyboard shortcuts"
+          ]
+        },
+        "openai_contribution": {
+          "description": "**: A versatile button component designed for various use cases, capable of supporting multiple variants and sizes.",
+          "tags": [
+            "autodocs",
+            "component",
+            "interactive",
+            "and",
+            "customization",
+            "customizable"
+          ],
+          "props": [],
+          "accessibility": [
+            {
+              "type": "aria-label",
+              "value": "ariants",
+              "description": "AI-suggested ARIA attribute"
+            },
+            {
+              "type": "aria-label",
+              "value": "ARIA Labels",
+              "description": "AI-suggested ARIA attribute"
+            },
+            {
+              "type": "aria-label",
+              "value": "ARIA labels",
+              "description": "AI-suggested ARIA attribute"
+            },
+            {
+              "type": "aria-label",
+              "value": "ariant",
+              "description": "AI-suggested ARIA attribute"
+            },
+            {
+              "type": "aria-label",
+              "value": "ARIA labels",
+              "description": "AI-suggested ARIA attribute"
+            },
+            {
+              "type": "aria-label",
+              "value": "ariants",
+              "description": "AI-suggested ARIA attribute"
+            },
+            {
+              "type": "keyboard-support",
+              "value": "keyboard-navigation",
+              "description": "AI-identified keyboard support requirement"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "parserResults": [
+    {
+      "parser": "comments",
+      "timestamp": "2025-11-12T22:39:55.527Z",
+      "metadata": {
+        "warning": "Comment parser not fully implemented - requires file system access",
+        "executionTime": 0
+      }
+    },
+    {
+      "parser": "storybook",
+      "timestamp": "2025-11-12T22:39:55.528Z",
+      "metadata": {
+        "storyFile": "/Users/patrickeaton/Projects/design-system-mcp/examples/button/test-button.stories.tsx",
+        "framework": "react",
+        "executionTime": 1
+      }
+    },
+    {
+      "parser": "openai",
+      "timestamp": "2025-11-12T22:40:11.938Z",
+      "metadata": {
+        "storyFile": "/Users/patrickeaton/Projects/design-system-mcp/examples/button/test-button.stories.tsx",
+        "aiModel": "gpt-4o-mini",
+        "executionTime": 16409,
+        "rawAnalysis": "### Comprehensive Analysis of the `TestButton` Component\n\n#### Component Overview\n- **Name**: TestButton\n- **Description**: A versatile button component designed for various use cases, capable of supporting multiple variants and sizes.\n- **Category**: Actions\n- **Import Path**: `import { TestButton } from '@examples/TestButton';`\n\n#### Props and Slots\n- **Props**: Currently, there are no defined props for the `TestButton`. This suggests that the component may be using default properties or lacks customization options.\n- **Slots**: No slots are defined, indicating that the component does not support named slots for content insertion.\n\n#### Tags and Customization\n- **Tags**: \n  - `customizable`: This tag suggests that while the component may not have explicit props, it is likely designed to be styled or modified through external means (e.g., CSS, themes).\n  \n#### Dependencies and Related Components\n- **Dependencies**: The component does not have any external dependencies, making it lightweight and easy to integrate.\n- **Related Components**: There are no related components listed, which may indicate that this button is a standalone component.\n\n#### Accessibility Features\n- **Accessibility**: \n  - **ARIA Labels**: No ARIA labels are defined, which may impact screen reader users.\n  - **Keyboard Support**: No keyboard support features are outlined, which is critical for accessibility.\n  - **Semantic Roles**: No semantic roles are specified, which could help improve the component's accessibility.\n\n### Recommendations for Improvement\n\n1. **Define Props**: \n   - Introduce props for customization, such as `variant`, `size`, `color`, and `onClick` handlers. This will enhance the component's flexibility and usability.\n\n2. **Accessibility Enhancements**:\n   - Implement ARIA labels to improve screen reader compatibility.\n   - Ensure keyboard support is included, allowing users to navigate and activate the button using keyboard shortcuts.\n   - Define semantic roles (e.g., `button`) to clarify the component's purpose to assistive technologies.\n\n3. **Documentation and Discoverability**:\n   - Expand the documentation to include usage examples, prop descriptions, and accessibility considerations. This will help developers understand how to implement the component effectively.\n   - Consider adding a dedicated section in the design system for button components, showcasing various states (hover, active, disabled) and variants.\n\n4. **Storybook Enhancements**:\n   - Add more stories to demonstrate different use cases, such as various sizes, colors, and states. This will provide developers with a visual reference for implementing the button in their applications.\n\n5. **Integration with Design Tokens**:\n   - If using a design system like MUI, ensure that the `TestButton` integrates with design tokens for consistent styling across applications. This includes colors, typography, and spacing.\n\n### Conclusion\nThe `TestButton` component serves as a foundational element within the design system but requires enhancements in customization, accessibility, and documentation to maximize its utility and effectiveness for developers. By addressing these areas, the component can become a more robust and integral part of the design system, improving the overall developer experience."
+      }
     }
   ]
 }

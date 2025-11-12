@@ -1,5 +1,5 @@
-import OpenAI from "openai";
-import { Message } from "./models";
+import OpenAI from 'openai';
+import { Message } from './models';
 
 /**
  * Simple in-memory message storage for development/testing
@@ -32,18 +32,19 @@ export class MemoryStorage {
     messageParam: OpenAI.ChatCompletionMessageParam,
     tokens: number = 0,
     actions: string[] = [],
-    userId?: string
+    userId?: string,
   ): Promise<Message> {
     const { content, role } = messageParam;
-    const toolCalls = 'tool_calls' in messageParam ? messageParam.tool_calls : [];
-    
+    const toolCalls =
+      'tool_calls' in messageParam ? messageParam.tool_calls : [];
+
     const message: Message = {
       accountId: this.accountId,
       projectId: this.projectId,
       agent: this.writeAgent,
       content: content as string,
-      role: role as "assistant" | "user",
-      userId: userId || "anonymous",
+      role: role as 'assistant' | 'user',
+      userId: userId || 'anonymous',
       timestamp: Date.now(),
       toolCalls: toolCalls || [],
       tokens,
@@ -55,8 +56,8 @@ export class MemoryStorage {
 
   public async getProjectSummary(): Promise<OpenAI.ChatCompletionMessageParam> {
     return {
-      role: "system",
-      content: "Project summary: Design system MCP generation tool",
+      role: 'system',
+      content: 'Project summary: Design system MCP generation tool',
     };
   }
 
@@ -73,14 +74,14 @@ export class MemoryStorage {
   }
 
   public async loadMessages(
-    startDate?: Date
+    startDate?: Date,
   ): Promise<OpenAI.ChatCompletionMessageParam[]> {
     let filteredMessages = this.messages;
 
     if (startDate) {
       const startTimestamp = startDate.getTime();
       filteredMessages = this.messages.filter(
-        (msg) => msg.timestamp >= startTimestamp
+        (msg) => msg.timestamp >= startTimestamp,
       );
     }
 

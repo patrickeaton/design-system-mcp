@@ -1,9 +1,16 @@
 {
   "metadata": {
     "storyFile": "/Users/patrickeaton/Projects/design-system-mcp/examples/button/my-awesome-button.stories.tsx",
-    "generatedAt": "2025-11-12T20:18:59.861Z",
+    "generatedAt": "2025-11-12T22:38:14.993Z",
     "framework": "react",
-    "designLibrary": "mui"
+    "designLibrary": "mui",
+    "generatedBy": "parser-chain",
+    "parsers": [
+      "comments",
+      "storybook",
+      "openai"
+    ],
+    "mergeStrategy": "merge"
   },
   "components": [
     {
@@ -14,7 +21,10 @@
       "tags": [
         "autodocs",
         "awesome",
-        "button"
+        "button",
+        "and",
+        "customization",
+        "customizable"
       ],
       "importStatement": "import { MyAwesomeButton } from '@examples/my-awesome-button';",
       "basicUsage": "<MyAwesomeButton />",
@@ -24,7 +34,106 @@
         "basic": "<MyAwesomeButton />"
       },
       "relatedComponents": [],
-      "dependencies": []
+      "dependencies": [],
+      "accessibility": "aria-label: ARIA Labels, aria-label: ariant, aria-label: ARIA labels, aria-label: ariants, keyboard-support: keyboard-navigation",
+      "parserData": {
+        "storybook": {
+          "storyFile": "/Users/patrickeaton/Projects/design-system-mcp/examples/button/my-awesome-button.stories.tsx",
+          "framework": "react",
+          "variants": []
+        },
+        "parsers": [
+          "storybook",
+          "openai"
+        ],
+        "openai": {
+          "analysis": "### Comprehensive Analysis of the MyAwesomeButton Component\n\n#### Component Overview\n- **Name**: MyAwesomeButton\n- **Description**: A super awesome button component designed to be customizable and easy to use within various contexts.\n- **Category**: Actions\n- **Import Path**: `import { MyAwesomeButton } from '@examples/my-awesome-button';`\n\n#### Props and Slots\n- **Props**: The component currently does not have any defined props. This may limit its configurability and reusability in different contexts.\n- **Slots**: No slots are defined, indicating that the component does not support content projection or additional child elements.\n\n#### Accessibility Features\n- **ARIA Labels**: None specified. This could hinder screen reader users from understanding the purpose of the button.\n- **Keyboard Support**: None specified. This may affect users who rely on keyboard navigation.\n- **Semantic Roles**: None specified. Using appropriate roles is crucial for accessibility.\n\n#### Tags and Customization\n- **Tags**: The component is tagged as \"customizable,\" indicating that it can be styled or modified, although specific customization options are not detailed.\n  \n#### Dependencies and Related Components\n- **Dependencies**: The component does not have any external dependencies, which simplifies its integration.\n- **Related Components**: No related components are specified, which may limit discoverability for developers looking for similar components.\n\n### Recommendations for Improvement\n\n1. **Define Props**:\n   - Introduce props for common button attributes such as `label`, `onClick`, `disabled`, `variant`, and `size`. This will enhance the component's flexibility and usability across different scenarios.\n\n2. **Enhance Accessibility**:\n   - Implement ARIA labels to provide context for screen readers.\n   - Ensure keyboard support is included by allowing users to activate the button using the keyboard (e.g., via the Enter or Space keys).\n   - Define semantic roles to improve the accessibility of the component.\n\n3. **Documentation and Discoverability**:\n   - Create comprehensive documentation that includes usage examples, prop definitions, and accessibility features. This will help developers understand how to effectively use the component.\n   - Consider adding a dedicated section in the design system for \"Button\" components, including MyAwesomeButton, to improve discoverability.\n\n4. **Add Variants and Slots**:\n   - Introduce variants (e.g., primary, secondary, outline) to allow for different visual styles.\n   - Consider adding slots for content projection, such as icons or labels, to increase the component's versatility.\n\n5. **Accessibility Testing**:\n   - Conduct accessibility testing to ensure that the component meets WCAG standards. This will help ensure that the component is usable by all users, including those with disabilities.\n\n### Conclusion\nThe MyAwesomeButton component serves as a foundational button within the design system but requires enhancements in props, accessibility, and documentation to maximize its utility and discoverability. By implementing the recommendations above, developers will have a more robust and user-friendly component that aligns with best practices in design systems.",
+          "enhancedBy": "gpt-4o-mini",
+          "suggestions": [
+            "Consider adding a dedicated section in the design system for \"Button\" components, including MyAwesomeButton, to improve discoverability",
+            "Consider adding slots for content projection, such as icons or labels, to increase the component's versatility",
+            "could hinder screen reader users from understanding the purpose of the button"
+          ],
+          "bestPractices": [
+            "best practices in design systems",
+            "use within various contexts",
+            "Implement ARIA labels to provide context for screen readers"
+          ]
+        },
+        "openai_contribution": {
+          "description": "**: A super awesome button component designed to be customizable and easy to use within various contexts.",
+          "tags": [
+            "autodocs",
+            "awesome",
+            "button",
+            "and",
+            "customization",
+            "customizable"
+          ],
+          "props": [],
+          "accessibility": [
+            {
+              "type": "aria-label",
+              "value": "ARIA Labels",
+              "description": "AI-suggested ARIA attribute"
+            },
+            {
+              "type": "aria-label",
+              "value": "ariant",
+              "description": "AI-suggested ARIA attribute"
+            },
+            {
+              "type": "aria-label",
+              "value": "ARIA labels",
+              "description": "AI-suggested ARIA attribute"
+            },
+            {
+              "type": "aria-label",
+              "value": "ariants",
+              "description": "AI-suggested ARIA attribute"
+            },
+            {
+              "type": "aria-label",
+              "value": "ariants",
+              "description": "AI-suggested ARIA attribute"
+            },
+            {
+              "type": "keyboard-support",
+              "value": "keyboard-navigation",
+              "description": "AI-identified keyboard support requirement"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "parserResults": [
+    {
+      "parser": "comments",
+      "timestamp": "2025-11-12T22:38:00.455Z",
+      "metadata": {
+        "warning": "Comment parser not fully implemented - requires file system access",
+        "executionTime": 0
+      }
+    },
+    {
+      "parser": "storybook",
+      "timestamp": "2025-11-12T22:38:00.458Z",
+      "metadata": {
+        "storyFile": "/Users/patrickeaton/Projects/design-system-mcp/examples/button/my-awesome-button.stories.tsx",
+        "framework": "react",
+        "executionTime": 2
+      }
+    },
+    {
+      "parser": "openai",
+      "timestamp": "2025-11-12T22:38:14.993Z",
+      "metadata": {
+        "storyFile": "/Users/patrickeaton/Projects/design-system-mcp/examples/button/my-awesome-button.stories.tsx",
+        "aiModel": "gpt-4o-mini",
+        "executionTime": 14535,
+        "rawAnalysis": "### Comprehensive Analysis of the MyAwesomeButton Component\n\n#### Component Overview\n- **Name**: MyAwesomeButton\n- **Description**: A super awesome button component designed to be customizable and easy to use within various contexts.\n- **Category**: Actions\n- **Import Path**: `import { MyAwesomeButton } from '@examples/my-awesome-button';`\n\n#### Props and Slots\n- **Props**: The component currently does not have any defined props. This may limit its configurability and reusability in different contexts.\n- **Slots**: No slots are defined, indicating that the component does not support content projection or additional child elements.\n\n#### Accessibility Features\n- **ARIA Labels**: None specified. This could hinder screen reader users from understanding the purpose of the button.\n- **Keyboard Support**: None specified. This may affect users who rely on keyboard navigation.\n- **Semantic Roles**: None specified. Using appropriate roles is crucial for accessibility.\n\n#### Tags and Customization\n- **Tags**: The component is tagged as \"customizable,\" indicating that it can be styled or modified, although specific customization options are not detailed.\n  \n#### Dependencies and Related Components\n- **Dependencies**: The component does not have any external dependencies, which simplifies its integration.\n- **Related Components**: No related components are specified, which may limit discoverability for developers looking for similar components.\n\n### Recommendations for Improvement\n\n1. **Define Props**:\n   - Introduce props for common button attributes such as `label`, `onClick`, `disabled`, `variant`, and `size`. This will enhance the component's flexibility and usability across different scenarios.\n\n2. **Enhance Accessibility**:\n   - Implement ARIA labels to provide context for screen readers.\n   - Ensure keyboard support is included by allowing users to activate the button using the keyboard (e.g., via the Enter or Space keys).\n   - Define semantic roles to improve the accessibility of the component.\n\n3. **Documentation and Discoverability**:\n   - Create comprehensive documentation that includes usage examples, prop definitions, and accessibility features. This will help developers understand how to effectively use the component.\n   - Consider adding a dedicated section in the design system for \"Button\" components, including MyAwesomeButton, to improve discoverability.\n\n4. **Add Variants and Slots**:\n   - Introduce variants (e.g., primary, secondary, outline) to allow for different visual styles.\n   - Consider adding slots for content projection, such as icons or labels, to increase the component's versatility.\n\n5. **Accessibility Testing**:\n   - Conduct accessibility testing to ensure that the component meets WCAG standards. This will help ensure that the component is usable by all users, including those with disabilities.\n\n### Conclusion\nThe MyAwesomeButton component serves as a foundational button within the design system but requires enhancements in props, accessibility, and documentation to maximize its utility and discoverability. By implementing the recommendations above, developers will have a more robust and user-friendly component that aligns with best practices in design systems."
+      }
     }
   ]
 }

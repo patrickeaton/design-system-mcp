@@ -1,18 +1,18 @@
-import { glob } from "glob";
-import { writeFileSync, readFileSync, existsSync } from "fs";
-import { join, dirname, resolve, extname, basename } from "path";
+import { glob } from 'glob';
+import { writeFileSync, readFileSync, existsSync } from 'fs';
+import { join, dirname, resolve, extname, basename } from 'path';
 import type {
   DesignSystemConfig,
   ComponentDefinition,
   MCPOutput,
-} from "../models";
-import { Framework } from "../models";
+} from '../models';
+import { Framework } from '../models';
 
 /**
  * Find Storybook files based on configuration
  */
 export const findStorybookFiles = async (
-  config: DesignSystemConfig
+  config: DesignSystemConfig,
 ): Promise<string[]> => {
   const { rootDirectory, storybook } = config;
   const { storiesPattern, excludePatterns = [] } = storybook;
@@ -39,18 +39,18 @@ export const findStorybookFiles = async (
 const findComponentFile = (storyFilePath: string): string | null => {
   const dir = dirname(storyFilePath);
   const baseName = basename(storyFilePath);
-  
+
   // Remove .stories from the filename and try different extensions
   const componentBase = baseName.replace(/\.stories\.(js|jsx|ts|tsx|mdx)$/, '');
   const extensions = ['tsx', 'ts', 'jsx', 'js'];
-  
+
   for (const ext of extensions) {
     const componentPath = join(dir, `${componentBase}.${ext}`);
     if (existsSync(componentPath)) {
       return componentPath;
     }
   }
-  
+
   // Also try looking for index files in a directory with the component name
   const componentDir = join(dir, componentBase);
   for (const ext of extensions) {
@@ -59,7 +59,7 @@ const findComponentFile = (storyFilePath: string): string | null => {
       return indexPath;
     }
   }
-  
+
   return null;
 };
 
@@ -70,29 +70,32 @@ const extractComponentNamesFromFile = (componentFilePath: string): string[] => {
   try {
     const content = readFileSync(componentFilePath, 'utf-8');
     const componentNames: string[] = [];
-    
+
     // Look for named exports that are likely components (start with uppercase)
-    const namedExportRegex = /export\s+(?:const|function|class)\s+([A-Z][a-zA-Z0-9]*)/g;
+    const namedExportRegex =
+      /export\s+(?:const|function|class)\s+([A-Z][a-zA-Z0-9]*)/g;
     let match;
     while ((match = namedExportRegex.exec(content)) !== null) {
       componentNames.push(match[1]);
     }
-    
+
     // Look for default export if it's a component
-    const defaultExportRegex = /export\s+default\s+(?:function\s+)?([A-Z][a-zA-Z0-9]*)/;
+    const defaultExportRegex =
+      /export\s+default\s+(?:function\s+)?([A-Z][a-zA-Z0-9]*)/;
     const defaultMatch = content.match(defaultExportRegex);
     if (defaultMatch) {
       componentNames.push(defaultMatch[1]);
     }
-    
+
     // Look for arrow function components
-    const arrowComponentRegex = /export\s+const\s+([A-Z][a-zA-Z0-9]*)\s*=\s*[^=]/g;
+    const arrowComponentRegex =
+      /export\s+const\s+([A-Z][a-zA-Z0-9]*)\s*=\s*[^=]/g;
     while ((match = arrowComponentRegex.exec(content)) !== null) {
       if (!componentNames.includes(match[1])) {
         componentNames.push(match[1]);
       }
     }
-    
+
     return componentNames;
   } catch (error) {
     console.warn(`Failed to read component file ${componentFilePath}:`, error);
@@ -106,7 +109,7 @@ const extractComponentNamesFromFile = (componentFilePath: string): string[] => {
 const kebabToPascalCase = (kebabCase: string): string => {
   return kebabCase
     .split('-')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join('');
 };
 
@@ -116,50 +119,58 @@ const kebabToPascalCase = (kebabCase: string): string => {
 export const parseStorybookFile = async (
   filePath: string,
   framework: Framework,
-  config?: { baseImportPath?: string }
+  config?: { baseImportPath?: string },
 ): Promise<ComponentDefinition[]> => {
   const fileName = basename(filePath);
   const componentBase = fileName.replace(/\.stories\.(js|jsx|ts|tsx|mdx)$/, '');
-  
+
   // Find the corresponding component file
   const componentFile = findComponentFile(filePath);
-  
+
   // Extract component names from the actual component file
   let componentNames: string[] = [];
   if (componentFile) {
     componentNames = extractComponentNamesFromFile(componentFile);
   }
-  
+
   // If no component names found, fall back to converted filename
   if (componentNames.length === 0) {
     const fallbackName = kebabToPascalCase(componentBase);
     componentNames = [fallbackName];
   }
-  
+
   // Try to dynamically import the story file to extract metadata
   let storyMetadata: any = {};
   try {
     // For now, we'll read the file content and try to extract some basic info
     // In a full implementation, we'd use a proper AST parser or dynamic import
     const storyContent = readFileSync(filePath, 'utf-8');
-    
+
     // Extract title from export default
     const titleMatch = storyContent.match(/title:\s*['"`]([^'"`]+)['"`]/);
     const title = titleMatch ? titleMatch[1] : componentBase;
-    
+
     // Extract tags
     const tagsMatch = storyContent.match(/tags:\s*\[([^\]]+)\]/);
-    const tags = tagsMatch 
-      ? tagsMatch[1].split(',').map((t: string) => t.trim().replace(/['"`]/g, ''))
+    const tags = tagsMatch
+      ? tagsMatch[1]
+          .split(',')
+          .map((t: string) => t.trim().replace(/['"`]/g, ''))
       : ['component'];
-    
+
     // Extract parameters.docs.description.component (more comprehensive)
-    const docsDescMatch = storyContent.match(/description:\s*\{\s*component:\s*['"`]([^'"`]+)['"`]/);
-    const simpleDescMatch = storyContent.match(/docs:\s*\{[^}]*description:\s*['"`]([^'"`]+)['"`]/);
-    const description = docsDescMatch ? docsDescMatch[1] : 
-                       simpleDescMatch ? simpleDescMatch[1] : 
-                       `Component from ${title}`;
-    
+    const docsDescMatch = storyContent.match(
+      /description:\s*\{\s*component:\s*['"`]([^'"`]+)['"`]/,
+    );
+    const simpleDescMatch = storyContent.match(
+      /docs:\s*\{[^}]*description:\s*['"`]([^'"`]+)['"`]/,
+    );
+    const description = docsDescMatch
+      ? docsDescMatch[1]
+      : simpleDescMatch
+        ? simpleDescMatch[1]
+        : `Component from ${title}`;
+
     storyMetadata = {
       title,
       tags,
@@ -168,35 +179,36 @@ export const parseStorybookFile = async (
   } catch (error) {
     console.warn(`Failed to parse story file ${filePath}:`, error);
   }
-  
+
   // Remove duplicates from component names
   const uniqueComponentNames = [...new Set(componentNames)];
-  
+
   // Create component definitions
-  return uniqueComponentNames.map(componentName => {
+  return uniqueComponentNames.map((componentName) => {
     // Create import path using baseImportPath if provided
     let importPath: string;
-    
+
     if (config?.baseImportPath) {
       // Use baseImportPath with component name
-      const componentPath = componentFile 
+      const componentPath = componentFile
         ? basename(componentFile).replace(/\.(tsx?|jsx?)$/, '')
         : componentName;
       importPath = `import { ${componentName} } from '${config.baseImportPath}/${componentPath}';`;
     } else {
       // Use relative path as before
-      const relativePath = componentFile 
+      const relativePath = componentFile
         ? `./${basename(componentFile).replace(/\.(tsx?|jsx?)$/, '')}`
         : `./components/${componentName}`;
       importPath = `import { ${componentName} } from '${relativePath}';`;
     }
-      
+
     const component: ComponentDefinition = {
       name: componentName,
       displayName: componentName,
-      description: storyMetadata.description || `Component parsed from ${filePath}`,
+      description:
+        storyMetadata.description || `Component parsed from ${filePath}`,
       framework,
-      tags: storyMetadata.tags || ["component"],
+      tags: storyMetadata.tags || ['component'],
       importPath,
       props: [],
       slots: [],
@@ -215,13 +227,13 @@ export const parseStorybookFile = async (
  */
 export const generateMCPOutput = (
   components: ComponentDefinition[],
-  config: DesignSystemConfig
+  config: DesignSystemConfig,
 ): MCPOutput => {
   const output: MCPOutput = {
     metadata: {
       name: config.name,
-      version: config.version || "1.0.0",
-      description: config.description || "",
+      version: config.version || '1.0.0',
+      description: config.description || '',
       framework: config.storybook.framework,
       generatedAt: new Date().toISOString(),
       sourceDirectory: config.rootDirectory,
@@ -230,10 +242,10 @@ export const generateMCPOutput = (
       theme: config.theme,
     },
     components: components.map((component) => ({
-      id: component.name.toLowerCase().replace(/\s+/g, "-"),
+      id: component.name.toLowerCase().replace(/\s+/g, '-'),
       name: component.name,
       description: component.description,
-      category: component.category || "general",
+      category: component.category || 'general',
       tags: component.tags,
       importStatement: component.importPath,
       basicUsage: component.examples[0]?.code || `<${component.name} />`,
@@ -245,7 +257,7 @@ export const generateMCPOutput = (
         withSlots:
           component.slots.length > 0
             ? component.examples.find((ex) =>
-                ex.title.toLowerCase().includes("slot")
+                ex.title.toLowerCase().includes('slot'),
               )?.code
             : undefined,
       },
@@ -271,7 +283,7 @@ export const generateMCPOutput = (
     });
 
     // By category
-    const category = component.category || "general";
+    const category = component.category || 'general';
     if (!output.componentIndex.byCategory[category]) {
       output.componentIndex.byCategory[category] = [];
     }
@@ -287,10 +299,10 @@ export const generateMCPOutput = (
 export const generateInlineContextFile = (
   storyFilePath: string,
   components: ComponentDefinition[],
-  config: DesignSystemConfig
+  config: DesignSystemConfig,
 ): string => {
   const storyComponents = components.filter(
-    (component) => component.storyFile === storyFilePath
+    (component) => component.storyFile === storyFilePath,
   );
 
   const inlineContext = {
@@ -301,10 +313,10 @@ export const generateInlineContextFile = (
       designLibrary: config.designLibrary,
     },
     components: storyComponents.map((component) => ({
-      id: component.name.toLowerCase().replace(/\s+/g, "-"),
+      id: component.name.toLowerCase().replace(/\s+/g, '-'),
       name: component.name,
       description: component.description,
-      category: component.category || "general",
+      category: component.category || 'general',
       tags: component.tags,
       importStatement: component.importPath,
       basicUsage: component.examples[0]?.code || `<${component.name} />`,
@@ -316,7 +328,7 @@ export const generateInlineContextFile = (
         withSlots:
           component.slots.length > 0
             ? component.examples.find((ex) =>
-                ex.title.toLowerCase().includes("slot")
+                ex.title.toLowerCase().includes('slot'),
               )?.code
             : undefined,
       },
@@ -335,13 +347,13 @@ export const generateInlineContextFile = (
 export const writeInlineContextFiles = async (
   storyFiles: string[],
   allComponents: ComponentDefinition[],
-  config: DesignSystemConfig
+  config: DesignSystemConfig,
 ): Promise<number> => {
   let filesWritten = 0;
 
   for (const storyFile of storyFiles) {
     const components = allComponents.filter(
-      (component) => component.storyFile === storyFile
+      (component) => component.storyFile === storyFile,
     );
 
     if (components.length === 0) continue;
@@ -349,20 +361,20 @@ export const writeInlineContextFiles = async (
     const contextContent = generateInlineContextFile(
       storyFile,
       components,
-      config
+      config,
     );
 
     // Generate inline file path
-    const storyDir = storyFile.substring(0, storyFile.lastIndexOf("/"));
+    const storyDir = storyFile.substring(0, storyFile.lastIndexOf('/'));
     const storyBasename = storyFile
-      .substring(storyFile.lastIndexOf("/") + 1)
-      .replace(/\.stories\.(js|jsx|ts|tsx|mdx)$/, "");
+      .substring(storyFile.lastIndexOf('/') + 1)
+      .replace(/\.stories\.(js|jsx|ts|tsx|mdx)$/, '');
 
     const inlineFilePath = join(
       storyDir,
-      config.output.inlineFilePrefix 
+      config.output.inlineFilePrefix
         ? `${config.output.inlineFilePrefix}-${storyBasename}${config.output.inlineFileExtension}`
-        : `${storyBasename}${config.output.inlineFileExtension}`
+        : `${storyBasename}${config.output.inlineFileExtension}`,
     );
 
     writeFileSync(inlineFilePath, contextContent);

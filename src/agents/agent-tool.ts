@@ -9,7 +9,7 @@ export type AgentToolConfig = {
     config: {
       accountId: string;
       projectId: string;
-    }
+    },
   ) => Promise<OpenAI.ChatCompletionToolMessageParam & { actions?: string[] }>;
   validate?: (params: string) => boolean;
 };
@@ -23,7 +23,7 @@ export class AgentTool {
     config: {
       accountId: string;
       projectId: string;
-    }
+    },
   ) => Promise<OpenAI.ChatCompletionToolMessageParam & { actions?: string[] }>;
   private validate: (params: string) => boolean;
 
@@ -59,7 +59,7 @@ export class AgentTool {
     config: {
       accountId: string;
       projectId: string;
-    }
+    },
   ): Promise<OpenAI.ChatCompletionToolMessageParam & { actions?: string[] }> {
     if (!this.validate(params)) throw new Error('Invalid parameters');
 

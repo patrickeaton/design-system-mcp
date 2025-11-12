@@ -13,70 +13,70 @@
  * Common component tags for categorization
  */
 export enum CommonTags {
-  INPUT = "input",
-  FORM = "form",
-  LAYOUT = "layout",
-  NAVIGATION = "navigation",
-  FEEDBACK = "feedback",
-  DATA_DISPLAY = "data-display",
-  OVERLAY = "overlay",
-  MEDIA = "media",
-  TYPOGRAPHY = "typography",
-  BUTTON = "button",
-  ICON = "icon",
-  UTILITY = "utility",
+  INPUT = 'input',
+  FORM = 'form',
+  LAYOUT = 'layout',
+  NAVIGATION = 'navigation',
+  FEEDBACK = 'feedback',
+  DATA_DISPLAY = 'data-display',
+  OVERLAY = 'overlay',
+  MEDIA = 'media',
+  TYPOGRAPHY = 'typography',
+  BUTTON = 'button',
+  ICON = 'icon',
+  UTILITY = 'utility',
 }
 
 /**
  * Component prop types
  */
 export enum PropType {
-  STRING = "string",
-  NUMBER = "number",
-  BOOLEAN = "boolean",
-  OBJECT = "object",
-  ARRAY = "array",
-  FUNCTION = "function",
-  ENUM = "enum",
-  UNION = "union",
-  NODE = "node", // React node/element
-  COMPONENT = "component",
+  STRING = 'string',
+  NUMBER = 'number',
+  BOOLEAN = 'boolean',
+  OBJECT = 'object',
+  ARRAY = 'array',
+  FUNCTION = 'function',
+  ENUM = 'enum',
+  UNION = 'union',
+  NODE = 'node', // React node/element
+  COMPONENT = 'component',
 }
 
 /**
  * Framework types supported
  */
 export enum Framework {
-  REACT = "react",
-  VUE = "vue",
-  ANGULAR = "angular",
-  SVELTE = "svelte",
-  WEB_COMPONENTS = "web-components",
+  REACT = 'react',
+  VUE = 'vue',
+  ANGULAR = 'angular',
+  SVELTE = 'svelte',
+  WEB_COMPONENTS = 'web-components',
 }
 
 /**
  * Design library types supported
  */
 export enum DesignLibrary {
-  MATERIAL_UI = "mui",
-  TAILWIND = "tailwind",
-  BOOTSTRAP = "bootstrap",
-  CHAKRA_UI = "chakra",
-  MANTINE = "mantine",
-  ANT_DESIGN = "antd",
-  SEMANTIC_UI = "semantic",
-  BULMA = "bulma",
-  FOUNDATION = "foundation",
-  CUSTOM = "custom",
-  NONE = "none",
+  MATERIAL_UI = 'mui',
+  TAILWIND = 'tailwind',
+  BOOTSTRAP = 'bootstrap',
+  CHAKRA_UI = 'chakra',
+  MANTINE = 'mantine',
+  ANT_DESIGN = 'antd',
+  SEMANTIC_UI = 'semantic',
+  BULMA = 'bulma',
+  FOUNDATION = 'foundation',
+  CUSTOM = 'custom',
+  NONE = 'none',
 }
 
 /**
  * Output mode types
  */
 export enum OutputMode {
-  SINGLE_FILE = "single-file", // Generate one consolidated file
-  INLINE_FILES = "inline-files", // Generate individual context files next to story files
+  SINGLE_FILE = 'single-file', // Generate one consolidated file
+  INLINE_FILES = 'inline-files', // Generate individual context files next to story files
 }
 
 // =============================================================================
@@ -261,7 +261,7 @@ export interface StorybookConfig {
 export interface OutputConfig {
   mode: OutputMode; // Whether to generate single file or inline files
   outputPath: string; // Where to write the MCP file (for single-file mode)
-  format: "json" | "yaml"; // Output format
+  format: 'json' | 'yaml'; // Output format
   includeTheme: boolean; // Whether to include theme in output
   includeExamples: boolean; // Whether to include code examples
   minify?: boolean; // Whether to minify output
@@ -269,6 +269,23 @@ export interface OutputConfig {
   // Inline files configuration
   inlineFilePrefix?: string; // Prefix for inline context files (default: "")
   inlineFileExtension?: string; // Extension for inline files (default: ".dsm.json")
+}
+
+/**
+ * Parser chain configuration
+ */
+export interface ParserChainConfiguration {
+  enabled: boolean; // Whether to use parser chain (default: true)
+  parsers: ParserConfiguration[];
+  mergeStrategy: 'append' | 'merge' | 'override'; // How to merge parser results
+  continueOnError: boolean; // Continue if a parser fails
+}
+
+export interface ParserConfiguration {
+  name: 'storybook' | 'openai' | 'comments'; // Parser identifier
+  enabled: boolean;
+  weight?: number; // Execution order (lower = earlier)
+  config?: Record<string, any>; // Parser-specific configuration
 }
 
 /**
@@ -295,6 +312,9 @@ export interface DesignSystemConfig {
 
   // Output configuration
   output: OutputConfig;
+
+  // Parser configuration
+  parsers?: ParserChainConfiguration;
 
   // Manual overrides
   manualComponents?: ComponentDefinition[]; // Manually defined components

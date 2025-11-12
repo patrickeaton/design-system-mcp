@@ -1,13 +1,13 @@
-import OpenAI from "openai";
-import { AgentTool } from "./agent-tool";
-import { MemoryStorage } from "./memory-storage";
-import { Message } from "./models";
+import OpenAI from 'openai';
+import { AgentTool } from './agent-tool';
+import { MemoryStorage } from './memory-storage';
+import { Message } from './models';
 
 const DEFAULT_CONFIG: Omit<
   OpenAI.ChatCompletionCreateParamsNonStreaming,
-  "messages" | "tools"
+  'messages' | 'tools'
 > = {
-  model: "gpt-4o-mini",
+  model: 'gpt-4o-mini',
   max_tokens: 1000,
 };
 
@@ -29,7 +29,7 @@ export class Agent {
   private storage: MemoryStorage | null;
   private config: Omit<
     OpenAI.ChatCompletionCreateParamsNonStreaming,
-    "messages"
+    'messages'
   >;
 
   constructor({
@@ -46,7 +46,7 @@ export class Agent {
     tools?: AgentTool[];
     storage?: MemoryStorage | null;
     config?: Partial<
-      Omit<OpenAI.ChatCompletionCreateParamsNonStreaming, "messages" | "tools">
+      Omit<OpenAI.ChatCompletionCreateParamsNonStreaming, 'messages' | 'tools'>
     >;
   }) {
     this.openAI = new OpenAI({
@@ -74,32 +74,29 @@ export class Agent {
     message: OpenAI.ChatCompletionCreateParamsNonStreaming,
     tokens = 0,
     actions: string[] = [],
-    depth = 0
+    depth = 0,
   ): Promise<{
     answer: OpenAI.ChatCompletionMessageParam;
     tokens: number;
     actions: string[];
   }> {
-    console.log("Processing message", message.messages.length, "depth", depth);
-    
     // Prevent infinite loops by limiting depth
     const MAX_DEPTH = 5;
     if (depth >= MAX_DEPTH) {
-      console.log("Max depth reached, stopping tool calls");
+      console.log('Max depth reached, stopping tool calls');
       return {
         answer: {
-          role: "assistant",
-          content: "Maximum processing depth reached. Please try a simpler request."
+          role: 'assistant',
+          content:
+            'Maximum processing depth reached. Please try a simpler request.',
         },
         actions,
-        tokens
+        tokens,
       };
     }
 
     const res = await this.openAI.chat.completions.create(message);
     const answer = res.choices[0].message;
-
-    console.log("Received answer", answer);
 
     // No tools, pretty simple.
     if (!answer?.tool_calls) {
@@ -115,10 +112,13 @@ export class Agent {
     messages.push(answer);
 
     // Build a map of tools
-    const tools = this.tools.reduce((acc, tool) => {
-      acc[tool.getName()] = tool;
-      return acc;
-    }, {} as { [toolName: string]: AgentTool });
+    const tools = this.tools.reduce(
+      (acc, tool) => {
+        acc[tool.getName()] = tool;
+        return acc;
+      },
+      {} as { [toolName: string]: AgentTool },
+    );
 
     const messageActions: string[] = [...actions];
 
@@ -136,17 +136,17 @@ export class Agent {
           {
             accountId: this.accountId,
             projectId: this.projectId,
-          }
+          },
         );
 
         // Add the actions to the message
         if (toolActions?.length)
           messageActions.push(
-            ...toolActions.filter((a) => !messageActions.includes(a))
+            ...toolActions.filter((a) => !messageActions.includes(a)),
           );
 
         return res;
-      })
+      }),
     );
 
     messages.push(...toolResponses);
@@ -156,22 +156,22 @@ export class Agent {
       {
         ...message,
         messages,
-        tool_choice: "none", // This is to stop it running the tools again
+        tool_choice: 'none', // This is to stop it running the tools again
       },
       tokens + (res?.usage?.total_tokens ?? 0), // Add the tokens used by the tool
       messageActions,
-      depth + 1
+      depth + 1,
     );
   }
 
   public async sendMessage(
     userId: string,
     content: string,
-    settings: MessageContextSettings = {}
+    settings: MessageContextSettings = {},
   ): Promise<Message | string | null> {
     const messages: OpenAI.ChatCompletionMessageParam[] = [
       {
-        role: "system",
+        role: 'system',
         content: this.prompt,
       },
     ];
@@ -194,7 +194,7 @@ export class Agent {
 
       if (settings.includeMessageHistory) {
         const history = await this.storage.loadMessages(
-          settings.messagingHistoryStartDate
+          settings.messagingHistoryStartDate,
         );
         messages.push(...history);
       }
@@ -202,12 +202,12 @@ export class Agent {
       // Save the user message
       await this.storage.saveMessage(
         {
-          role: "user",
+          role: 'user',
           content,
         },
         0,
         [],
-        userId
+        userId,
       );
     }
 
@@ -215,7 +215,7 @@ export class Agent {
       messages.push(...settings.addtionalContext);
 
     messages.push({
-      role: "user",
+      role: 'user',
       content,
     });
 
