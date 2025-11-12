@@ -17,6 +17,7 @@ import {
   parseCommand,
   listCommand,
   generateCommand,
+  serveCommand,
 } from './commands';
 import { 
   registerAllParsers, 
@@ -43,8 +44,8 @@ async function initializeCLI() {
   const config = new EasyCLIConfigFile({
     filename: 'dsm.config',
     extensions: ['json'],
-    saveTransformer: saveConfigTransformer,
-    loadTransformer: loadConfigTransformer,
+    saveTransform: saveConfigTransformer,
+    loadTransform: loadConfigTransformer,
   });
 
   // Create theme with verbose logging
@@ -177,6 +178,7 @@ async function initializeCLI() {
     .addCommand(parseCommand)
     .addCommand(listCommand)
     .addCommand(generateCommand)
+    .addCommand(serveCommand)
     .handleVerboseFlag()
     .execute();
 

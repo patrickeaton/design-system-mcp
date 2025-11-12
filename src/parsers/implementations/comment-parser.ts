@@ -1,4 +1,6 @@
 import { ComponentParser, ParseContext, ParseResult, ComponentAnalysis } from '../parser-interface';
+import { readFileSync, existsSync } from 'fs';
+import { resolve, dirname, basename, join } from 'path';
 
 /**
  * Parser that extracts @dsm comments from component source files
@@ -218,7 +220,7 @@ export class CommentParser implements ComponentParser {
     const componentName = this.extractComponentNameFromFile(filePath);
     
     // Look for JSDoc comments above component exports
-    const jsdocMatch = content.match(/\\/\\*\\*([\\s\\S]*?)\\*\\/\\s*export\\s+(?:default\\s+)?(?:const\\s+|function\\s+|class\\s+)?${componentName}/);
+    const jsdocMatch = content.match(new RegExp(`/\\*\\*([\\s\\S]*?)\\*/\\s*export\\s+(?:default\\s+)?(?:const\\s+|function\\s+|class\\s+)?${componentName}`));
     
     if (jsdocMatch) {
       const jsdocContent = jsdocMatch[1];
