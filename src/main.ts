@@ -3,7 +3,7 @@
  */
 import dotenv from 'dotenv';
 
-dotenv.config({ path: '.dsmrc' });
+dotenv.config({ path: '.dsmrc', quiet: true });
 
 import {
   EasyCLI,

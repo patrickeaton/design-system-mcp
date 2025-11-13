@@ -3,10 +3,14 @@
   "packageManager": "yarn@4.6.0",
   "bin": "./dist/main.js",
   "scripts": {
-    "bun:design-system-mcp": "bun src/main.ts",
-    "tsx:design-system-mcp": "tsx src/main.ts",
+    "build": "yarn clean && tsc -p tsconfig.build.json && yarn build:shebang",
+    "build:shebang": "echo '#!/usr/bin/env node' | cat - dist/main.js > temp && mv temp dist/main.js && chmod +x dist/main.js",
+    "clean": "rm -rf dist",
+    "dev": "tsx src/main.ts",
     "serve": "tsx src/main.ts serve",
-    "start": "yarn serve"
+    "serve:prod": "node dist/main.js serve",
+    "start": "yarn serve",
+    "prepublishOnly": "yarn build"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.21.1",

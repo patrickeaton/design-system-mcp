@@ -1,7 +1,7 @@
 /**
  * MCP Server command - starts the Model Context Protocol server
  */
-import { EasyCLICommand, EasyCLITheme } from 'easy-cli-framework';
+import { EasyCLICommand } from 'easy-cli-framework';
 import type { DesignSystemGlobalFlags, ComponentDefinition } from '../types';
 import { loadConfig } from '../utils/config';
 import { findStorybookFiles, parseStorybookFile } from '../utils/storybook';
@@ -13,22 +13,17 @@ interface ServeFlags extends DesignSystemGlobalFlags {
 
 export const serveCommand = new EasyCLICommand<{}, ServeFlags>(
   'serve',
-  async (flags: ServeFlags, theme: any) => {
-    const logger = (theme as EasyCLITheme).getLogger();
+  async (flags: ServeFlags) => {
     const config = loadConfig(flags);
     
     const { transport = 'stdio', port = 3000 } = flags;
-
-    logger.info(`🚀 Starting MCP server with ${transport} transport...`);
 
     try {
       // Try to import MCP SDK dynamically
       const { Server } = await import('@modelcontextprotocol/sdk/server/index.js');
       const { StdioServerTransport } = await import('@modelcontextprotocol/sdk/server/stdio.js');  
       const { CallToolRequestSchema, ListToolsRequestSchema } = await import('@modelcontextprotocol/sdk/types.js');
-
-      logger.success('MCP SDK loaded successfully');
-
+      
       // Create the MCP server
       const server = new Server(
         {
@@ -57,7 +52,6 @@ export const serveCommand = new EasyCLICommand<{}, ServeFlags>(
               );
               allComponents.push(...components);
             } catch (error) {
-              logger.warn(`Failed to parse ${filePath}: ${error instanceof Error ? error.message : String(error)}`);
             }
           }
 
@@ -69,7 +63,6 @@ export const serveCommand = new EasyCLICommand<{}, ServeFlags>(
             (component) => !config.ignoreComponents?.includes(component.name),
           );
         } catch (error) {
-          logger.error(`Failed to load components: ${error instanceof Error ? error.message : String(error)}`);
           return [];
         }
       };
@@ -279,33 +272,39 @@ export const serveCommand = new EasyCLICommand<{}, ServeFlags>(
       // Start the server based on transport type
       if (transport === 'stdio') {
         const stdioTransport = new StdioServerTransport();
-        logger.info('MCP server starting with stdio transport...');
-        logger.info('Server is ready to accept connections via stdin/stdout');
         
         // Handle graceful shutdown
         process.on('SIGINT', async () => {
-          logger.info('Shutting down MCP server...');
           await server.close();
           process.exit(0);
         });
-
+        
+        // The server.connect() call should keep the process alive
+        // by listening on stdin/stdout
         await server.connect(stdioTransport);
+        
+        // Prevent the CLI framework from exiting - only set raw mode if it's a TTY
+        if (process.stdin.isTTY) {
+          process.stdin.setRawMode(false);
+        }
+        process.stdin.resume();
+        
+        // Keep the process alive by preventing the main function from exiting
+        await new Promise<void>((resolve, reject) => {
+          process.on('SIGTERM', () => {
+            server.close().then(() => resolve()).catch(reject);
+          });
+          
+          process.on('SIGINT', () => {
+            server.close().then(() => resolve()).catch(reject);
+          });
+        });
+        
       } else if (transport === 'http') {
-        logger.error('HTTP transport not yet implemented');
-        logger.info('Please use stdio transport for now: --transport stdio');
         process.exit(1);
       }
 
     } catch (error) {
-      logger.error('Failed to start MCP server:');
-      logger.error(`Error: ${error instanceof Error ? error.message : String(error)}`);
-      logger.info('');
-      logger.info('Make sure @modelcontextprotocol/sdk is properly installed:');
-      logger.info('  yarn add @modelcontextprotocol/sdk');
-      logger.info('');
-      logger.info('For now, you can use other commands like:');
-      logger.info('  generate - Generate MCP JSON files');
-      logger.info('  list     - List all components');
       process.exit(1);
     }
   },

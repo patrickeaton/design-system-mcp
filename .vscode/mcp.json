@@ -1,0 +1,13 @@
+{
+	"servers": {
+		"design-system-mcp": {
+			"type": "stdio",
+			"command": "${workspaceFolder}/mcp-server.sh",
+			"args": [
+				"serve"
+			],
+			"cwd": "${workspaceFolder}"
+		}
+	},
+	"inputs": []
+}
